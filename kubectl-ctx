@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+usage() {
+  cat <<EOF
+Interactively change the current context.
+
+Usage:
+  ctx [-l]
+
+Examples:
+  # Interactively change the current context
+  kubectl ctx
+
+  # List all contexts (indicating current context with a '*')
+  kubectl ctx -l
+
+Flags:
+  -l          List all available contexts
+  -h, --help  Show this help message
+EOF
+}
+
+fzf_missing() {
+  cat <<EOF
+You must install fzf to use this plugin:
+
+    https://github.com/junegunn/fzf
+
+INSTALLATION
+
+Homebrew (macOS) and Linuxbrew (Linux):
+    brew install fzf
+
+From source (macOS, Linux):
+    git clone https://github.com/junegunn/fzf.git ~/.fzf
+    ~/.fzf/install
+
+Other installation options:
+    https://github.com/junegunn/fzf#installation 
+EOF
+}
+
+list_contexts() {
+  c=$(kubectl config current-context 2>/dev/null)
+  kubectl config get-contexts -o name | sed "s/^/  /;\|^  $c$|s/ /*/"
+}
+
+set_context() {
+  which -s fzf || { fzf_missing; exit 1; }
+  local c=$(list_contexts | fzf -e | sed 's/^..//')
+  if [[ -z "$c" ]]; then
+    echo "Aborted. Nothing has been changed."
+  else
+    kubectl config use-context "$c"
+  fi
+}
+
+if [[ -z "$1" ]]; then
+  set_context
+elif [[ "$1" = -l ]]; then
+  list_contexts
+else
+  usage
+fi
