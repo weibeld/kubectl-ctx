@@ -8,15 +8,25 @@ This makes it easier to work with multiple clusters from the same machine.
 
 ## Installation
 
-To install the plugin, simply download the `kubectl-ctx` file and save it in any directory that is in your `PATH`.
+To install the plugin, download the `kubectl-ctx` file and save it in any directory that is in your `PATH`:
 
-You can verify that the plugin is correctly installed by running the following command:
+~~~bash
+curl -O https://raw.githubusercontent.com/weibeld/kubectl-ctx/master/kubectl-ctx
+~~~
+
+Then, make the `kubectl-ctx` file executable:
+
+~~~bash
+chmod +x kubectl-ctx
+~~~
+
+Now, you can verify that the plugin is correctly installed by running the following command:
 
 ~~~bash
 kubectl plugin list
 ~~~~
 
-This lists all the plugins that `kubectl` detected, and the `kubectl-ctx` plugin should be listed there too.
+This lists all the plugins that `kubectl` detected, and the `kubectl-ctx` plugin should now be listed there.
 
 To uninstall the plugin, simply delete the `kubectl-ctx` file.
 
