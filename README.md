@@ -6,6 +6,8 @@ A kubectl [plugin](https://kubernetes.io/docs/tasks/extend-kubectl/kubectl-plugi
 
 This makes it easier to work with multiple clusters from the same machine.
 
+Also see [kubectl-ns](https://github.com/weibeld/kubectl-ns) for switching between namespaces.
+
 ## Installation
 
 To install the plugin, download the `kubectl-ctx` file and save it in any directory that is in your `PATH`:
