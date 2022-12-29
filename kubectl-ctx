@@ -46,7 +46,7 @@ list_contexts() {
 }
 
 set_context() {
-  which -s fzf || { fzf_missing; exit 1; }
+  which fzf >/dev/null || { fzf_missing; exit 1; }
   local c=$(list_contexts | fzf -e | sed 's/^..//')
   if [[ -z "$c" ]]; then
     echo "Aborted. Nothing has been changed."
